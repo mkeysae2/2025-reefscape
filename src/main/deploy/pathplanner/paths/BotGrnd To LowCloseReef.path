@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.4375710227272729,
+        "y": 2.363068181818181
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.4845880681818184,
+        "y": 2.4877130681818174
+      },
+      "isLocked": false,
+      "linkedName": "LowerGrndPieces"
+    },
+    {
+      "anchor": {
+        "x": 3.8307528409090907,
+        "y": 2.886576704545455
+      },
+      "prevControl": {
+        "x": 2.916690340909091,
+        "y": 2.5375710227272723
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LowerCloseReef"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 15.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -122.9052429229879
+  },
+  "reversed": false,
+  "folder": "Auto Top Start Ground Grab",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -139.821
+  },
+  "useDefaultConstraints": true
+}

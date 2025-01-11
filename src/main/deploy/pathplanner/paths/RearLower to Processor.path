@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.323650568181819,
+        "y": 0.5432528409090912
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.85830965909091,
+        "y": 1.4822443181818175
+      },
+      "isLocked": false,
+      "linkedName": "Processor"
+    },
+    {
+      "anchor": {
+        "x": 5.168607954545455,
+        "y": 2.886576704545455
+      },
+      "prevControl": {
+        "x": 5.351420454545455,
+        "y": 2.5209517045454537
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "RearLowerReef"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 15.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -58.46520809481175
+  },
+  "reversed": false,
+  "folder": "New Folder",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 90.79572355273932
+  },
+  "useDefaultConstraints": true
+}

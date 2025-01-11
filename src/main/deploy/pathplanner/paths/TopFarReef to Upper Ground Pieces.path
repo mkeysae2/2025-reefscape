@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.1769176136363635,
+        "y": 5.121875
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.528764204545454,
+        "y": 5.645383522727273
+      },
+      "isLocked": false,
+      "linkedName": "UpperFarReef"
+    },
+    {
+      "anchor": {
+        "x": 1.5123579545454546,
+        "y": 5.836505681818181
+      },
+      "prevControl": {
+        "x": 2.6424715909090915,
+        "y": 5.828196022727271
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "UpperGroundPieces"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 15.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 177.31622484053116
+  },
+  "reversed": false,
+  "folder": "Auto Top Start Ground Grab",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 61.85839876773809
+  },
+  "useDefaultConstraints": true
+}

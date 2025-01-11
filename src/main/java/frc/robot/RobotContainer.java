@@ -42,7 +42,7 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
-        autoChooser = AutoBuilder.buildAutoChooser("Square");
+        autoChooser = AutoBuilder.buildAutoChooser("Auto Top Start");
         SmartDashboard.putData("Auto Mode", autoChooser);
         configureBindings();
     }
