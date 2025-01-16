@@ -14,12 +14,14 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.led.Bus;
+import frc.robot.subsystems.led.Led;
+import frc.robot.subsystems.led.Rainbow;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -41,9 +43,12 @@ public class RobotContainer {
     /* Path follower */
     private final SendableChooser<Command> autoChooser;
 
+    private final Led led = new Led(9, 47);
+
     public RobotContainer() {
         autoChooser = AutoBuilder.buildAutoChooser("Auto Top Start");
         SmartDashboard.putData("Auto Mode", autoChooser);
+        led.setRoutine(new Bus(led.getBuffer()));
         configureBindings();
     }
 
