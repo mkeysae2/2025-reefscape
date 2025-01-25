@@ -4,24 +4,25 @@
 
 package frc.robot;
 
-import static edu.wpi.first.units.Units.*;
-
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
-
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.led.Bus;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.led.Led;
-import frc.robot.subsystems.led.Rainbow;
+
+import static edu.wpi.first.units.Units.*;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -44,11 +45,11 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
 
     private final Led led = new Led(9, 47);
+    private final Elevator elevator = new Elevator(new TalonFX(0));
 
     public RobotContainer() {
         autoChooser = AutoBuilder.buildAutoChooser("Auto Top Start");
         SmartDashboard.putData("Auto Mode", autoChooser);
-        led.setRoutine(new Bus(led.getBuffer()));
         configureBindings();
     }
 
@@ -68,7 +69,12 @@ public class RobotContainer {
         joystick.b().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
         ));
-
+        joystick.x().whileTrue(elevator.goToHeight(50));
+        joystick.y().whileTrue(elevator.goToHeight(100));
+        joystick.povRight().onTrue(
+            drivetrain.applyRequest(() -> drive.withVelocityX(1))
+                .raceWith(Commands.waitUntil(() -> drivetrain.getState().Pose.getX() >= 2))
+        );
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
         joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
