@@ -63,7 +63,11 @@ public class RobotContainer {
             )
         );
 
-        joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
+        //joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
+        joystick.a().whileTrue(drivetrain.applyRequest(() -> {
+            var offset = (LimelightHelpers.getTX("limelight-reef"));
+            return drive.withVelocityY((offset - 15 * Math.signum(offset)) * 0.2);
+        }));
         joystick.b().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
         ));
