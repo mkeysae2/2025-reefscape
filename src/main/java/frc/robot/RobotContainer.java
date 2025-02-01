@@ -8,6 +8,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -65,18 +66,33 @@ public class RobotContainer {
 
         //joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.a().whileTrue(drivetrain.applyRequest(() -> {
-            var offset = (LimelightHelpers.getTX("limelight-reef"));
-            return drive.withVelocityY((offset - 15 * Math.signum(offset)) * 0.2);
+            var tx = LimelightHelpers.getTX("limelight-reef");
+            var ta = LimelightHelpers.getTA("limelight-reef");
+//            var offset = ta * 1.51 + 5.57;
+            var offset = 20;
+            var sideways = (tx - offset * Math.signum(tx)) * -0.2;
+            sideways = MathUtil.clamp(sideways, -0.5, 0.5);
+            var rotationError = LimelightHelpers.getCameraPose_TargetSpace("limelight-reef")[4];
+            var rotation = rotationError * 0.1;
+            //rotation = MathUtil.clamp(rotation, -0.3, 0.3);
+            return new SwerveRequest.RobotCentric()
+                .withRotationalDeadband(0.5)
+                .withDeadband(0.5)
+                .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
+                .withVelocityX(-joystick.getLeftY() * MaxSpeed)
+                .withVelocityY(sideways)
+                .withRotationalRate(rotation);
         }));
         joystick.b().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
         ));
         joystick.x().whileTrue(elevator.goToHeight(50));
         joystick.y().whileTrue(elevator.goToHeight(100));
-        joystick.povRight().onTrue(
-            drivetrain.applyRequest(() -> drive.withVelocityX(1))
-                .raceWith(Commands.waitUntil(() -> drivetrain.getState().Pose.getX() >= 2))
-        );
+        joystick.povUp().whileTrue(drivetrain.applyRequest(() -> drive.withVelocityX(0.45)));
+        joystick.povDown().whileTrue(drivetrain.applyRequest(() -> drive.withVelocityX(-0.45)));
+        joystick.povRight().whileTrue(drivetrain.applyRequest(() -> drive.withVelocityY(-0.45)));
+        joystick.povLeft().whileTrue(drivetrain.applyRequest(() -> drive.withVelocityY(0.45)));
+
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
         joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
